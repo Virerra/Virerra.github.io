@@ -1,4 +1,4 @@
 Hi I'm sean
 ### My Projects
-- [NIXIUM](projects/nixium.md)
+- [NIXIUM](nixium.pdf)
 - [The Intelligent Trader](projects/intelligent_trader.md)
