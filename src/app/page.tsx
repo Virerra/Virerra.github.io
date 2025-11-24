@@ -1,28 +1,25 @@
-import React from 'react'
-import { Metadata } from "next";
-import Hero from '@/components/Home/Hero';
-import Counter from '@/components/Home/Counter'
-import Progresswork from '@/components/Home/WorkProgress';
-import Services from '@/components/Home/Services';
-import Portfolio from '@/components/SharedComponent/portfollio'
-import Testimonial from '@/components/SharedComponent/Testimonial'
-import Blog from '@/components/SharedComponent/Blog'
-import Contactform from '@/components/Home/Contact';
-export const metadata: Metadata = {
-  title: "Venus",
-};
+import AboutMe from "./components/home/about-me"
+import Contact from "./components/home/contact"
+import EducationSkills from "./components/home/education-skills"
+import ExperienceSec from "./components/home/experience-sec"
+import HeroSection from "./components/home/hero-section"
+import ContactBar from "./components/home/hero-section/contact-bar"
+import LatestWork from "./components/home/latest-work"
 
-export default function Home() {
+const page = () => {
   return (
-    <main>
-      <Hero />
-      <Counter isColorMode={false} />
-      <Progresswork isColorMode={false} />
-      <Services />
-      <Portfolio />
-      <Testimonial />
-      <Blog />
-      <Contactform />
-    </main>
+    <>
+      <main>
+        <HeroSection />
+        <ContactBar />
+        <AboutMe />
+        <ExperienceSec />
+        <EducationSkills />
+        <LatestWork />
+        <Contact />
+      </main>
+    </>
   )
 }
+
+export default page

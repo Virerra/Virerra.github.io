@@ -1,47 +1,46 @@
-# Venus Free Next.js Website Template
-
+# Resume - Free Next.js Resume Website Template
 #### Preview
 
-- [Demo](https://themewagon.github.io/venus-nextjs/)
+ - [Demo](https://themewagon.github.io/Resume-Nextjs/)
 
 #### Download
+ - [Download from ThemeWagon](https://themewagon.com/themes/resume-nextjs/)
 
-- [Download from ThemeWagon](https://themewagon.com/themes/venus-nextjs/)
 
 ## Getting Started
 
-1. Clone Repository
-
-```
-git clone https://github.com/themewagon/venus-nextjs.git
-```
-
-2. Install Dependencies
-
-```
-npm i
+Clone from GitHub 
+```bash
+git clone https://github.com/themewagon/Resume-Nextjs.git
 ```
 
-3. Run the development server:
+Install dependencies:
+```bash
+npm install
+```
 
+Run development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+
+Build for production:
+```bash
+npm run build
 ```
 
 ## Author
 
-```
-Design and code is completely written by Getnextjstemplates and development team.
-```
+Design and code are written by the getnextjstemplates design & development team.  
+
 
 ## License
 
-- Design and Code is Copyright &copy; [codescandy](https://getnextjstemplates.com/)
-- Licensed cover under [MIT]
-- Distributed by [ThemeWagon](https://themewagon.com)
+ - Design and Code is Copyright &copy; [getnextjstemplates](https://getnextjstemplates.com/)
+ - Licensed under [MIT]
+ - Distributed by [ThemeWagon](https://themewagon.com)
+
+
+
+
+
