@@ -1,1 +1,119 @@
-<iframe src="https://1drv.ms/p/c/0200f2de074c73c6/IQQio0Vesl8wRZIv2n9gKCWHAd-jOnQKWRCmDbR2OKnX4B0" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nixium — Animated Presentation</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0a0a0a;
+        color: #f0f0f0;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 3rem;
+        margin-top: 40px;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: 2px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .ppt-wrapper {
+        position: sticky;
+        top: 10px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 150vh; /* long scroll area */
+    }
+
+    iframe {
+        width: 100%;
+        max-width: 960px;
+        height: 540px;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .scroll-zone {
+        height: 300vh; 
+        width: 100%;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 50px;
+        color: #666;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>NIXIUM — Presentation Demo</h1>
+
+<div class="container">
+
+    <div class="ppt-wrapper">
+        <!-- Your embedded PowerPoint -->
+        <iframe 
+            id="pptFrame"
+            src="https://1drv.ms/p/c/0200f2de074c73c6/IQSuVqMLAFDhR7CgrZa-jYb2ARFRDqs91US0uPmZ1sKitrs?em=2&wdAr=1.7777777777777777"
+            allowfullscreen
+        ></iframe>
+    </div>
+
+    <!-- Scroll zone for triggering slide changes -->
+    <div class="scroll-zone"></div>
+
+</div>
+
+<div class="footer">
+    Nixium © 2025 — All Rights Reserved
+</div>
+
+<script>
+/*
+    Scroll-triggered slide progression
+    - 1 scroll block = 1 slide
+    - Smooth and natural feeling
+*/
+
+let lastSlide = 0;
+
+window.addEventListener("scroll", () => {
+    const maxSlides = 20; // Adjust to number of slides if you want
+    const scrollPercent =
+        window.scrollY / (document.body.scrollHeight - window.innerHeight);
+
+    const targetSlide = Math.floor(scrollPercent * maxSlides);
+
+    if (targetSlide !== lastSlide) {
+        lastSlide = targetSlide;
+
+        const frame = document.getElementById("pptFrame").contentWindow;
+        
+        // This sends the "Next slide" or "Previous slide" command
+        frame.postMessage(JSON.stringify({
+            "message": "navigate",
+            "navigation": targetSlide > lastSlide ? "next" : "previous"
+        }), "*");
+    }
+});
+</script>
+
+</body>
+</html>
