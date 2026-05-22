@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--ink:#111;--muted:#666;--border:#e0e0e0;--bg:#fafaf8;--card:#fff;--tag-bg:#f0ede8;--tag-text:#444;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10;}
+  .logo{font-family:'DM Serif Display',serif;font-size:1.25rem;letter-spacing:-0.02em;}
+  .nav-links{display:flex;gap:2rem;}
+  .nav-links a{text-decoration:none;font-size:0.875rem;color:var(--muted);letter-spacing:0.03em;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--ink);}
+
+  .hero{padding:6rem 3rem 5rem;max-width:900px;margin:0 auto;animation:fadeUp 0.6s ease both;}
+  .hero-label{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.5rem;}
+  .hero h1 em{font-style:italic;color:var(--muted);}
+  .hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.7;}
+  .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;}
+
+  .btn-primary{display:inline-block;padding:0.7rem 1.5rem;background:var(--ink);color:#fff;text-decoration:none;font-size:0.875rem;border-radius:2px;letter-spacing:0.02em;transition:opacity 0.2s;}
+  .btn-primary:hover{opacity:0.8;}
+  .btn-ghost{display:inline-block;padding:0.7rem 1.5rem;border:1px solid var(--border);color:var(--ink);text-decoration:none;font-size:0.875rem;border-radius:2px;letter-spacing:0.02em;transition:background 0.2s;}
+  .btn-ghost:hover{background:var(--tag-bg);}
+
+  section{max-width:900px;margin:0 auto;padding:4rem 3rem;}
+  .section-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+
+  .project-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:2rem;}
+  .project-card:nth-child(1){animation:fadeUp 0.6s ease 0.1s both;}
+  .project-card:nth-child(2){animation:fadeUp 0.6s ease 0.2s both;}
+
+  .project-header{padding:2.5rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;border-bottom:1px solid var(--border);}
+  .project-number{font-family:'DM Serif Display',serif;font-size:3.5rem;color:var(--border);line-height:1;font-style:italic;justify-self:end;align-self:start;margin-top:-0.5rem;}
+  .project-name{font-family:'DM Serif Display',serif;font-size:2rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+  .project-tagline{font-size:1rem;color:var(--muted);line-height:1.6;max-width:520px;}
+  .tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.25rem;}
+  .tag{font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;background:var(--tag-bg);color:var(--tag-text);padding:0.3rem 0.75rem;border-radius:2px;}
+
+  .project-body{display:grid;grid-template-columns:1fr 1fr;}
+  .project-col{padding:2rem 2.5rem;}
+  .project-col+.project-col{border-left:1px solid var(--border);}
+  .col-label{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+  .col-text{font-size:0.9rem;line-height:1.75;color:#333;}
+
+  .feature-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+  .feature-list li{font-size:0.875rem;color:#333;display:flex;align-items:flex-start;gap:0.5rem;line-height:1.5;}
+  .feature-list li::before{content:"—";color:var(--muted);flex-shrink:0;margin-top:0.05em;}
+
+  .token-row{display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--border);}
+  .token-row:last-child{border-bottom:none;}
+  .token-pct{font-family:'DM Serif Display',serif;font-size:1.1rem;min-width:40px;}
+  .token-bar-wrap{flex:1;height:3px;background:var(--border);border-radius:2px;}
+  .token-bar{height:100%;background:var(--ink);border-radius:2px;}
+  .token-label{color:var(--muted);font-size:0.8rem;min-width:120px;}
+
+  .phase-strip{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+  .phase{padding:1.5rem 2.5rem;display:flex;align-items:flex-start;gap:1rem;}
+  .phase+.phase{border-left:1px solid var(--border);}
+  .phase-num{font-family:'DM Serif Display',serif;font-size:1.5rem;font-style:italic;color:var(--muted);flex-shrink:0;line-height:1;margin-top:0.1rem;}
+  .phase-title{font-size:0.8rem;font-weight:500;margin-bottom:0.35rem;letter-spacing:0.02em;}
+  .phase-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);}
+  .stat-block{padding:1.75rem 2.5rem;text-align:center;}
+  .stat-block+.stat-block{border-left:1px solid var(--border);}
+  .stat-value{font-family:'DM Serif Display',serif;font-size:2rem;letter-spacing:-0.02em;margin-bottom:0.25rem;}
+  .stat-label{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+
+  .layers-strip{display:flex;flex-direction:column;border-top:1px solid var(--border);}
+  .layer-row{display:grid;grid-template-columns:3rem 1fr 1fr;align-items:start;gap:1.25rem;padding:1.1rem 2.5rem;border-bottom:1px solid var(--border);}
+  .layer-row:last-child{border-bottom:none;}
+  .layer-num{font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;color:var(--muted);line-height:1.4;}
+  .layer-name{font-size:0.85rem;font-weight:500;}
+  .layer-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;}
+
+  .writing-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;animation:fadeUp 0.6s ease 0.15s both;}
+  .writing-header{padding:2.5rem;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;}
+  .writing-series-name{font-family:'DM Serif Display',serif;font-size:2rem;letter-spacing:-0.02em;margin-bottom:0.4rem;}
+  .writing-tagline{font-size:1rem;color:var(--muted);line-height:1.6;max-width:500px;}
+  .writing-number{font-family:'DM Serif Display',serif;font-size:3.5rem;color:var(--border);line-height:1;font-style:italic;}
+  .chapter-list{display:flex;flex-direction:column;}
+  .chapter-item{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;border-bottom:1px solid var(--border);transition:background 0.2s;text-decoration:none;color:inherit;}
+  .chapter-item:last-child{border-bottom:none;}
+  .chapter-item:hover{background:var(--tag-bg);}
+  .chapter-left{display:flex;align-items:baseline;gap:1.25rem;}
+  .chapter-num{font-family:'DM Serif Display',serif;font-size:1.25rem;font-style:italic;color:var(--border);min-width:28px;}
+  .chapter-title{font-size:0.95rem;font-weight:500;margin-bottom:0.2rem;}
+  .chapter-sub{font-size:0.8rem;color:var(--muted);}
+  .chapter-arrow{font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;}
+
+  /* ABOUT — 3 col */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;animation:fadeUp 0.6s ease 0.2s both;}
+  .about-left h2{font-family:'DM Serif Display',serif;font-size:1.75rem;letter-spacing:-0.02em;line-height:1.3;margin-bottom:1rem;}
+  .about-left p{font-size:0.9rem;color:var(--muted);line-height:1.8;margin-bottom:1rem;}
+  .edu-block{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+  .edu-label{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
+  .edu-degree{font-size:0.9rem;font-weight:500;margin-bottom:0.2rem;}
+  .edu-school{font-size:0.85rem;color:var(--muted);}
+
+  .about-right{}
+  .skills-grid{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;}
+  .lang-row{display:flex;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+  .lang-item{font-size:0.8rem;color:var(--muted);}
+  .lang-item strong{display:block;font-size:0.85rem;color:var(--ink);font-weight:500;margin-bottom:0.15rem;}
+
+  /* CONTACT */
+  .contact-section{border-top:1px solid var(--border);padding:3rem;max-width:900px;margin:0 auto;}
+  .contact-section h2{font-family:'DM Serif Display',serif;font-size:1.5rem;letter-spacing:-0.02em;margin-bottom:2rem;}
+  .contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+  .contact-cell{background:var(--card);padding:1.25rem 1.5rem;text-decoration:none;color:inherit;transition:background 0.2s;display:block;}
+  .contact-cell:hover{background:var(--tag-bg);}
+  .contact-cell-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+  .contact-cell-value{font-size:0.85rem;font-weight:500;color:var(--ink);word-break:break-all;}
+
+  footer{border-top:1px solid var(--border);padding:1.5rem 3rem;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;font-size:0.75rem;color:var(--muted);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Shayan Samim Sadeh</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#writing">Writing</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-label">Creative Technologist · Istanbul</p>
+  <h1>Building ideas<br><em>that actually work.</em></h1>
+  <p class="hero-sub">Computer Engineering student at Altınbaş University with a passion for AI, algorithmic systems, and gamified design. I build things at the intersection of finance, technology, and creativity — and write fiction on the side.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">View projects</a>
+    <a href="#writing" class="btn-ghost">Read my writing</a>
+    <a href="#contact" class="btn-ghost">Get in touch</a>
+  </div>
+</div>
+
+<section id="projects">
+  <p class="section-label">Selected work</p>
+
+  <!-- 01 NIXIUM -->
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">NIXIUM</div>
+        <div class="project-tagline">A gamified DeFi ecosystem where users earn, trade, and grow through strategy — not speculation.</div>
+        <div class="tags">
+          <span class="tag">Crypto</span>
+          <span class="tag">Gamification</span>
+          <span class="tag">DeFi</span>
+          <span class="tag">Tokenomics</span>
+          <span class="tag">Web3</span>
+        </div>
+      </div>
+      <div class="project-number">01</div>
+    </div>
+    <div class="project-body">
+      <div class="project-col">
+        <p class="col-label">The problem</p>
+        <p class="col-text">Most crypto projects fail to sustain engagement. Users lose interest after early gains, and ecosystems collapse without real utility. The market needed a token built around genuine user participation.</p>
+      </div>
+      <div class="project-col">
+        <p class="col-label">The solution</p>
+        <p class="col-text">NIXIUM is a cryptocurrency with a two-phase gamified ecosystem. Users earn tokens through a tap-to-earn app, then invest them in virtual land plots that yield passive income — creating a circular, self-sustaining economy.</p>
+      </div>
+    </div>
+    <div class="project-body" style="border-top:1px solid var(--border);">
+      <div class="project-col">
+        <p class="col-label">Key mechanics</p>
+        <ul class="feature-list">
+          <li>Tap-to-earn with progress bar + token drops</li>
+          <li>Randomized loot crates with set collection system</li>
+          <li>Land plots with tiered yield and upgrades</li>
+          <li>Plot trading & auction marketplace</li>
+          <li>Token burning on every transaction</li>
+          <li>Anti-bot randomized cooldowns & decision trees</li>
+        </ul>
+      </div>
+      <div class="project-col">
+        <p class="col-label">Fee flow</p>
+        <div class="token-row">
+          <span class="token-pct">50%</span>
+          <div class="token-bar-wrap"><div class="token-bar" style="width:50%"></div></div>
+          <span class="token-label">Burned (deflationary)</span>
+        </div>
+        <div class="token-row">
+          <span class="token-pct">30%</span>
+          <div class="token-bar-wrap"><div class="token-bar" style="width:30%"></div></div>
+          <span class="token-label">Community rewards pool</span>
+        </div>
+        <div class="token-row">
+          <span class="token-pct">20%</span>
+          <div class="token-bar-wrap"><div class="token-bar" style="width:20%"></div></div>
+          <span class="token-label">Development & upkeep</span>
+        </div>
+      </div>
+    </div>
+    <div class="phase-strip">
+      <div class="phase">
+        <div class="phase-num">1</div>
+        <div>
+          <div class="phase-title">NIXIUM Droplets</div>
+          <div class="phase-desc">Tap-to-earn web app — users fill progress bars, open crates, collect item sets, and earn a share of the NIXIUM pool.</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">2</div>
+        <div>
+          <div class="phase-title">The Plot Ecosystem</div>
+          <div class="phase-desc">Phase 1 holders buy land plots with their NIXIUM, earning passive yield and participating in trading & auctions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 INTELLIGENT TRADER -->
+  <div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-name">Intelligent Trader</div>
+        <div class="project-tagline">A fully autonomous algorithmic trading system built on statistical anomaly detection — achieving +39.38% in ~9 months of out-of-sample testing.</div>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">Algorithmic Trading</span>
+          <span class="tag">Quantitative Finance</span>
+          <span class="tag">Binance API</span>
+          <span class="tag">CCXT</span>
+          <span class="tag">Statistics</span>
+        </div>
+      </div>
+      <div class="project-number">02</div>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-block">
+        <div class="stat-value">+39.38%</div>
+        <div class="stat-label">Walk-forward return</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">~9 mo</div>
+        <div class="stat-label">Out-of-sample period</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">MSIC</div>
+        <div class="stat-label">Portfolio architecture</div>
+      </div>
+    </div>
+    <div class="project-body" style="border-top:1px solid var(--border);">
+      <div class="project-col">
+        <p class="col-label">Core concept</p>
+        <p class="col-text">The system uses z-score–based anomaly detection to identify price deviations outside the statistically expected range. A layered pipeline of volatility gating, regime checks, and market context validation ensures only high-quality setups are taken.</p>
+      </div>
+      <div class="project-col">
+        <p class="col-label">MSIC innovation</p>
+        <p class="col-text">Multi-Session Independent Capital (MSIC) divides total capital across currency pairs dynamically based on recent performance. Each pair gets its own capital bucket, anomaly logic, and TP/SL calculations — reducing drawdowns and eliminating currency bias.</p>
+      </div>
+    </div>
+    <div class="layers-strip">
+      <div class="layer-row">
+        <div class="layer-num">L1</div>
+        <div class="layer-name">Randomness model</div>
+        <div class="layer-desc">Baseline metrics — volatility, entropy, auto-correlation — to define normal price behavior.</div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num">L2</div>
+        <div class="layer-name">Anomaly detector</div>
+        <div class="layer-desc">Rolling z-score, skew/kurtosis, and regime classification to catch structure in noise.</div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num">L3</div>
+        <div class="layer-name">Market conditions filter</div>
+        <div class="layer-desc">Economic calendar APIs, NLP news classification, and session-awareness to avoid adverse events.</div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num">L4</div>
+        <div class="layer-name">Decision engine</div>
+        <div class="layer-desc">Probabilistic entry/exit logic with Kelly criterion sizing, mode-switching, and a strict state machine.</div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num">L5</div>
+        <div class="layer-name">Execution + learning layer</div>
+        <div class="layer-desc">Live API integration, paper trading pipeline, and a feedback loop that adapts from past trade outcomes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="writing">
+  <p class="section-label">Writing</p>
+  <div class="writing-card">
+    <div class="writing-header">
+      <div>
+        <div class="writing-series-name">Liege Series</div>
+        <div class="writing-tagline">A fiction series about iron, honor, and the human heart under the weight of war. Published on Medium.</div>
+        <div class="tags" style="margin-top:1.25rem;">
+          <span class="tag">Fiction</span>
+          <span class="tag">Historical</span>
+          <span class="tag">War</span>
+          <span class="tag">Series</span>
+        </div>
+      </div>
+      <div class="writing-number">03</div>
+    </div>
+    <div class="chapter-list">
+      <a class="chapter-item" href="https://medium.com/@Virerra/liege-e3e71feafa71" target="_blank" rel="noopener">
+        <div class="chapter-left">
+          <div class="chapter-num">I</div>
+          <div>
+            <div class="chapter-title">Prologue</div>
+            <div class="chapter-sub">Chapter One · 15 min read</div>
+          </div>
+        </div>
+        <span class="chapter-arrow">Read on Medium ↗</span>
+      </a>
+      <a class="chapter-item" href="https://medium.com/@Virerra/liege-d123b3d0db76" target="_blank" rel="noopener">
+        <div class="chapter-left">
+          <div class="chapter-num">II</div>
+          <div>
+            <div class="chapter-title">Incompetence</div>
+            <div class="chapter-sub">Chapter Two · Oct 2025</div>
+          </div>
+        </div>
+        <span class="chapter-arrow">Read on Medium ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">About</p>
+  <div class="about-grid">
+    <div class="about-left">
+      <h2>Student, builder,<br>and storyteller.</h2>
+      <p>I work at the intersection of finance, systems thinking, and technology. I designed NIXIUM's entire token economy from scratch and built a fully autonomous trading algorithm with real, walk-forward verified returns.</p>
+      <p>Outside of building, I write fiction through my Liege series on Medium. I bridge creativity and engineering — combining a humanities background with a Computer Engineering degree.</p>
+      <div class="edu-block">
+        <div class="edu-label">Education</div>
+        <div class="edu-degree">B.Sc. Computer Engineering (In Progress)</div>
+        <div class="edu-school">Altınbaş University, Istanbul</div>
+      </div>
+    </div>
+    <div class="about-right">
+      <p class="col-label" style="margin-bottom:1rem;">Technical skills</p>
+      <div class="skills-grid">
+        <span class="tag">Python</span>
+        <span class="tag">Algorithmic trading</span>
+        <span class="tag">Anomaly detection</span>
+        <span class="tag">Backtesting</span>
+        <span class="tag">Binance API / CCXT</span>
+        <span class="tag">Statistical modelling</span>
+        <span class="tag">Data analytics</span>
+        <span class="tag">Basic JavaScript</span>
+        <span class="tag">AI-assisted dev</span>
+      </div>
+      <p class="col-label" style="margin-top:1.5rem;margin-bottom:1rem;">Creative & soft skills</p>
+      <div class="skills-grid">
+        <span class="tag">Tokenomics design</span>
+        <span class="tag">System design</span>
+        <span class="tag">Technical writing</span>
+        <span class="tag">Pitch creation</span>
+        <span class="tag">Product thinking</span>
+        <span class="tag">Fiction writing</span>
+        <span class="tag">Worldbuilding</span>
+      </div>
+      <div class="lang-row">
+        <div class="lang-item"><strong>Farsi</strong>Native</div>
+        <div class="lang-item"><strong>English</strong>B2 Certified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-section">
+  <h2>Let's connect.</h2>
+  <div class="contact-grid">
+    <a class="contact-cell" href="mailto:shayansamimsadeh@gmail.com">
+      <div class="contact-cell-label">Email</div>
+      <div class="contact-cell-value">shayansamimsadeh@gmail.com</div>
+    </a>
+    <a class="contact-cell" href="https://www.linkedin.com/in/virerra" target="_blank" rel="noopener">
+      <div class="contact-cell-label">LinkedIn</div>
+      <div class="contact-cell-value">linkedin.com/in/virerra</div>
+    </a>
+    <a class="contact-cell" href="https://x.com/v1rerra" target="_blank" rel="noopener">
+      <div class="contact-cell-label">X / Twitter</div>
+      <div class="contact-cell-value">@v1rerra</div>
+    </a>
+    <a class="contact-cell" href="https://medium.com/@Virerra" target="_blank" rel="noopener">
+      <div class="contact-cell-label">Medium</div>
+      <div class="contact-cell-value">@Virerra</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <span>Shayan Samim Sadeh · Portfolio 2026</span>
+  <span>Istanbul, Turkey</span>
+</footer>
+
+</body>
+</html>
