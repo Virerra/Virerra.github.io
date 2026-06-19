@@ -353,11 +353,15 @@ section { padding: 120px 48px; max-width: 1100px; margin: 0 auto; }
   background: linear-gradient(135deg, rgba(200,240,160,0.04) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.4s;
+  pointer-events: none;
+  z-index: 0;
 }
 .project-card:hover { border-color: var(--border2); background: var(--surface2); }
 .project-card:hover::before { opacity: 1; }
 
 .project-header {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -407,12 +411,16 @@ section { padding: 120px 48px; max-width: 1100px; margin: 0 auto; }
 }
 
 .project-links {
+  position: relative;
+  z-index: 2;
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
 .project-link {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -421,6 +429,7 @@ section { padding: 120px 48px; max-width: 1100px; margin: 0 auto; }
   text-decoration: none;
   letter-spacing: 0.04em;
   transition: color 0.2s;
+  cursor: pointer;
 }
 .project-link:hover { color: var(--accent); }
 .project-link svg { transition: transform 0.2s var(--ease-out); }
@@ -786,7 +795,7 @@ footer {
           I'm a Computer Engineering student at Altınbaş University with a background that cuts across disciplines — humanities first, then code. That combination shapes how I think about technology: not just how systems work, but who they affect and why it matters.
         </p>
         <p>
-          I currently intern at FlyRank AI, working daily with large language models — not just using them, but learning how they behave, fail, and improve. Outside of that, I architect projects at the edge of what's possible: algorithmic trading systems, open-source productivity tools, AI-powered apps.
+          I currently intern at FlyRank AI, working daily with large language models — not just using them, but learning how they behave, fail, and improve. Outside of that, I architect projects at the edge of what's possible: algorithmic trading systems, open-source productivity tools, AI-powered apps, and most recently LoopLens — a cost simulator that gives engineers visibility into agentic AI loop spend before they run anything.
         </p>
         <p>
           Outside of tech, I write the Liege series — historical fiction about iron, honor, and what people are made of under pressure.
@@ -796,9 +805,16 @@ footer {
         <span class="skill-tag">AI & LLMs</span>
         <span class="skill-tag">Prompt Engineering</span>
         <span class="skill-tag">Claude AI</span>
+        <span class="skill-tag">Web App Development</span>
+        <span class="skill-tag">AI Cost Optimization</span>
+        <span class="skill-tag">AI Infrastructure</span>
+        <span class="skill-tag">Token Economics</span>
+        <span class="skill-tag">Simulation Modeling</span>
         <span class="skill-tag">Product Development</span>
         <span class="skill-tag">Open-Source Development</span>
         <span class="skill-tag">APIs & Automation</span>
+        <span class="skill-tag">Data Analysis</span>
+        <span class="skill-tag">Technical Documentation</span>
         <span class="skill-tag">Information Literacy</span>
         <span class="skill-tag">Critical Thinking</span>
         <span class="skill-tag">Project Management</span>
@@ -813,13 +829,43 @@ footer {
 <!-- Work / Projects -->
 <section id="work">
   <div class="section-label">Selected work</div>
-  <h2 class="section-title reveal">Three projects.<br>Three different edges.</h2>
+  <h2 class="section-title reveal">Four projects.<br>Four different edges.</h2>
 
   <div class="projects-list">
 
+    <!-- LoopLens -->
+    <div class="project-card reveal">
+      <div class="project-index">01 / 04</div>
+      <div class="project-header">
+        <div>
+          <h3 class="project-name">LoopLens</h3>
+          <p class="project-desc">
+            A cost simulator for agentic AI loops — see per-iteration cost breakdowns before running anything. Models fan-out multi-agent architectures, calculates prompt caching break-even, and compares 13+ models side by side on the same loop configuration. Pure deterministic math, zero API calls required to simulate.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">Vite</span>
+            <span class="project-tag">Open Source</span>
+            <span class="project-tag">Cost modeling</span>
+            <span class="project-tag">BYOK</span>
+          </div>
+          <div class="project-links">
+            <a href="https://looplens-project.vercel.app" target="_blank" rel="noopener" class="project-link primary">
+              Live app
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="https://github.com/Virerra/looplens" target="_blank" rel="noopener" class="project-link">
+              GitHub
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Singularity -->
     <div class="project-card reveal">
-      <div class="project-index">01 / 03</div>
+      <div class="project-index">02 / 04</div>
       <div class="project-header">
         <div>
           <h3 class="project-name">Singularity Workspace</h3>
@@ -849,7 +895,7 @@ footer {
 
     <!-- Reality Check -->
     <div class="project-card reveal">
-      <div class="project-index">02 / 03</div>
+      <div class="project-index">03 / 04</div>
       <div class="project-header">
         <div>
           <h3 class="project-name">Reality Check</h3>
@@ -879,7 +925,7 @@ footer {
 
     <!-- Intelligent Trader -->
     <div class="project-card reveal">
-      <div class="project-index">03 / 03</div>
+      <div class="project-index">04 / 04</div>
       <div class="project-header">
         <div>
           <h3 class="project-name">Intelligent Trader IT/V4</h3>
